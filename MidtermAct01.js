@@ -10,7 +10,7 @@ import {
 
 export default function MidtermAct01() {
   const [messages, setMessages] = useState([
-    { id: "1", text: "Hi loveee", sender: "other" },
+    { id: "1", text: "Hi lovee", sender: "other" },
     { id: "2", text: "hello tangii, how are you?", sender: "me" },
     
         { id: "3", text: "I'm fine bebe, imissyouuu", sender: "other" },
