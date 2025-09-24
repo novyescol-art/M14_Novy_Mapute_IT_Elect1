@@ -1,12 +1,24 @@
 import React, { useState } from "react";
-import { SafeAreaView, View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
+import {
+  SafeAreaView,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 
 export default function MidtermAct01() {
   const [messages, setMessages] = useState([
-    { id: "1", text: "Hello! 👋", sender: "other" },
-    { id: "2", text: "Hi! How are you?", sender: "me" },
+    { id: "1", text: "Hi loveee", sender: "other" },
+    { id: "2", text: "hello tangii, how are you?", sender: "me" },
+    
+        { id: "3", text: "I'm fine bebe, imissyouuu", sender: "other" },
+        
   ]);
+  const [comments, setComments] = useState([]);
   const [input, setInput] = useState("");
+  const [commentInput, setCommentInput] = useState("");
 
   const sendMessage = () => {
     if (input.trim() === "") return;
@@ -16,12 +28,32 @@ export default function MidtermAct01() {
       text: input,
       sender: "me",
     };
-
-    setMessages([...messages, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setInput("");
+
+    // Auto reply
+    setTimeout(() => {
+      const botReply = {
+        id: (Date.now() + 1).toString(),
+        text: "iloveyouuu",
+        sender: "other",
+      };
+      setMessages((prev) => [...prev, botReply]);
+    }, 1000);
   };
 
-  const renderItem = ({ item }) => (
+  const addComment = () => {
+    if (commentInput.trim() === "") return;
+
+    const newComment = {
+      id: Date.now().toString(),
+      text: commentInput,
+    };
+    setComments((prev) => [...prev, newComment]);
+    setCommentInput("");
+  };
+
+  const renderMessage = ({ item }) => (
     <View
       style={{
         alignSelf: item.sender === "me" ? "flex-end" : "flex-start",
@@ -32,20 +64,40 @@ export default function MidtermAct01() {
         maxWidth: "70%",
       }}
     >
-      <Text style={{ color: item.sender === "me" ? "#fff" : "#000" }}>{item.text}</Text>
+      <Text style={{ color: item.sender === "me" ? "#fff" : "#000" }}>
+        {item.text}
+      </Text>
+    </View>
+  );
+
+  const renderComment = ({ item }) => (
+    <View
+      style={{
+        backgroundColor: "#f0f0f0",
+        borderRadius: 10,
+        padding: 10,
+        marginVertical: 4,
+      }}
+    >
+      <Text style={{ color: "#333" }}> {item.text}</Text>
     </View>
   );
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f2f2f2" }}>
+      {/* CHAT BOX */}
+      
+      <Text style={{ fontSize: 30, fontWeight: "bold", margin: 10  }}>
+        Chat Box
+      </Text>
       <FlatList
         data={messages}
         keyExtractor={(item) => item.id}
-        renderItem={renderItem}
+        renderItem={renderMessage}
         contentContainerStyle={{ padding: 10 }}
       />
 
-      {/* Input Field */}
+      {/* Chat Input */}
       <View
         style={{
           flexDirection: "row",
@@ -78,7 +130,56 @@ export default function MidtermAct01() {
             justifyContent: "center",
           }}
         >
-          <Text style={{ color: "#fff", fontWeight: "bold" }}>Send</Text>
+          <Text style={{ color: "#fff", fontWeight: "bold", fontSize:  30,}}>Send</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* COMMENT SECTION */}
+      <Text style={{ fontSize: 30, fontWeight: "bold", margin: 10 }}>
+        Comments
+      </Text>
+      <FlatList
+        data={comments}
+        keyExtractor={(item) => item.id}
+        renderItem={renderComment}
+        contentContainerStyle={{ padding: 10 }}
+      />
+
+      {/* Comment Input */}
+      <View
+        style={{
+          flexDirection: "row",
+          padding: 10,
+          borderTopWidth: 1,
+          borderColor: "#ccc",
+          backgroundColor: "#fff",
+        }}
+      >
+        <TextInput
+          style={{
+            flex: 1,
+            borderWidth: 1,
+            borderColor: "#ccc",
+            borderRadius: 20,
+            paddingHorizontal: 15,
+            marginRight: 10,
+          }}
+          placeholder="Write a comment..."
+          value={commentInput}
+          onChangeText={setCommentInput}
+        />
+        <TouchableOpacity
+          onPress={addComment}
+          style={{
+            backgroundColor: "#34a853",
+            borderRadius: 20,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            justifyContent: "center",
+          
+          }}
+        >
+          <Text style={{ color: "#fff", fontWeight: "bold", fontSize:  20, }}>Comment</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
