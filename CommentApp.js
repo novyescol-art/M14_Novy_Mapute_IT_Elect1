@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Button, ScrollView } from "react-native";
 
-export default function CommentInput() {
+export default function CommentApp() {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
 
