@@ -1,16 +1,19 @@
-import React from 'react';
-import { SafeAreaView } from 'react-native';
-import ColorChangerApp from './ColorChangerApp';
-import CounterApp from './CounterApp';
-import CommentApp from './CommentApp';
-import MessengerApp from './MessengerApp';
+import React from "react";
+import { KeyboardAvoidingView, Platform,Image,ScrollView } from "react-native";
+import ChatBubble from "./BubbleChat";
+import CommentSect from "./CommentSect";
+
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <ColorChangerApp/>
-      <CounterApp/>
-     <MessengerApp/>
-    <CommentApp/>
-    </SafeAreaView>
+    
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+    
+      <ChatBubble/>
+      <CommentSect/>
+    </KeyboardAvoidingView>
+  
   );
 }
